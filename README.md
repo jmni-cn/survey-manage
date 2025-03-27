@@ -1,6 +1,6 @@
 # Vue3 DOM Component Survey Library
 
-这是一个基于 Vue3 + Vite + TypeScript 的 问卷 组件库。
+这是一个基于 Vue3 + Vite + TypeScript 的 问卷支持创建和预览 组件库。
 
 ## 特性
 
