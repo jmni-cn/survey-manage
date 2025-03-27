@@ -1,0 +1,241 @@
+[
+  {
+    "id": "m8qyuppccwaq1vdd",
+    "type": "radio",
+    "typeDesc": "单选",
+    "title": "你好吗",
+    "desc": "",
+    "placeholder": "",
+    "check": {
+      "required": true,
+      "message": "此题为必填项"
+    },
+    "answer": {
+      "label": "",
+      "value": ""
+    },
+    "options": [
+      {
+        "optionId": "m8qyuppcxqymzvhg",
+        "label": "我很好",
+        "index": "A1"
+      },
+      {
+        "optionId": "m8qyv4olheh64ic9",
+        "label": "一般般",
+        "index": "A2"
+      },
+      {
+        "optionId": "m8qyv9ubb59y48ec",
+        "label": "不太好",
+        "index": "A3"
+      },
+      {
+        "optionId": "m8qyvep33bdwqklh",
+        "label": "我很不好",
+        "index": "A4"
+      }
+    ],
+    "index": "01"
+  },
+  {
+    "id": "m8qyvrjau7ynm7nb",
+    "type": "radio",
+    "typeDesc": "单选",
+    "title": "看到你好真是太好了，那今天天气好吗？",
+    "desc": "",
+    "placeholder": "",
+    "check": {
+      "required": true,
+      "message": "此题为必填项"
+    },
+    "answer": {
+      "label": "",
+      "value": ""
+    },
+    "options": [
+      {
+        "optionId": "m8qyvrjabpcasukg",
+        "label": "晴空万里",
+        "index": "A1"
+      },
+      {
+        "optionId": "m8qyw17e97u3091a",
+        "label": "艳阳高照",
+        "index": "A2"
+      },
+      {
+        "optionId": "m8qywcu36ci8mabc",
+        "label": "乌云密布",
+        "index": "A3"
+      },
+      {
+        "optionId": "m8qywdssee7un00v",
+        "label": "萌萌细雨",
+        "index": "A4"
+      },
+      {
+        "optionId": "m8qywdj2y1u2zbc9",
+        "label": "倾盆大雨",
+        "index": "A5"
+      }
+    ],
+    "index": "02",
+    "logic": {
+      "conditions": [
+        {
+          "type": "checked",
+          "targetId": "m8qyuppccwaq1vdd",
+          "answerId": "m8qyuppcxqymzvhg",
+          "target": {
+            "id": "m8qyuppccwaq1vdd",
+            "type": "radio",
+            "typeDesc": "单选",
+            "title": "你好吗",
+            "desc": "",
+            "placeholder": "",
+            "check": {
+              "required": true,
+              "message": "此题为必填项"
+            },
+            "answer": {
+              "label": "",
+              "value": ""
+            },
+            "options": [
+              {
+                "optionId": "m8qyuppcxqymzvhg",
+                "label": "我很好",
+                "index": "A1"
+              },
+              {
+                "optionId": "m8qyv4olheh64ic9",
+                "label": "一般般",
+                "index": "A2"
+              },
+              {
+                "optionId": "m8qyv9ubb59y48ec",
+                "label": "不太好",
+                "index": "A3"
+              },
+              {
+                "optionId": "m8qyvep33bdwqklh",
+                "label": "我很不好",
+                "index": "A4"
+              }
+            ],
+            "index": "01",
+            "logic": null
+          }
+        }
+      ],
+      "logicOperator": "AND"
+    }
+  },
+  {
+    "id": "m8qywofpmtpvddva",
+    "type": "radio",
+    "typeDesc": "单选",
+    "title": "很抱歉，我的心情也不好了，告诉我原因",
+    "desc": "",
+    "placeholder": "",
+    "check": {
+      "required": true,
+      "message": "此题为必填项"
+    },
+    "answer": {
+      "label": "",
+      "value": ""
+    },
+    "options": [
+      {
+        "optionId": "m8qywofpu3w565sf",
+        "label": "吵架了",
+        "index": "A1"
+      },
+      {
+        "optionId": "m8qyx5rnhudrt5vx",
+        "label": "工资低",
+        "index": "A2"
+      },
+      {
+        "optionId": "m8qyx5oddhudynwe",
+        "label": "失业了",
+        "index": "A3"
+      },
+      {
+        "optionId": "m8qyx5kjozx7104o",
+        "label": "没有存款",
+        "index": "A4"
+      }
+    ],
+    "index": "03",
+    "logic": {
+      "conditions": [
+        {
+          "type": "checked",
+          "targetId": "m8qyuppccwaq1vdd",
+          "answerId": "m8qyvep33bdwqklh",
+          "target": {
+            "id": "m8qyuppccwaq1vdd",
+            "type": "radio",
+            "typeDesc": "单选",
+            "title": "你好吗",
+            "desc": "",
+            "placeholder": "",
+            "check": {
+              "required": true,
+              "message": "此题为必填项"
+            },
+            "answer": {
+              "label": "",
+              "value": ""
+            },
+            "options": [
+              {
+                "optionId": "m8qyuppcxqymzvhg",
+                "label": "我很好",
+                "index": "A1"
+              },
+              {
+                "optionId": "m8qyv4olheh64ic9",
+                "label": "一般般",
+                "index": "A2"
+              },
+              {
+                "optionId": "m8qyv9ubb59y48ec",
+                "label": "不太好",
+                "index": "A3"
+              },
+              {
+                "optionId": "m8qyvep33bdwqklh",
+                "label": "我很不好",
+                "index": "A4"
+              }
+            ],
+            "index": "01",
+            "logic": null
+          }
+        }
+      ],
+      "logicOperator": "AND"
+    }
+  },
+  {
+    "id": "m8qyxoyoqr3qbj2r",
+    "type": "multipleText",
+    "typeDesc": "多行文本",
+    "title": "希望你可以保持心情愉悦",
+    "desc": "",
+    "placeholder": "",
+    "check": {
+      "required": true,
+      "message": "此题为必填项"
+    },
+    "answer": {
+      "label": "",
+      "value": ""
+    },
+    "index": "04"
+  }
+]
