@@ -1,6 +1,6 @@
 {
   "name": "jmni-survey",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Vue3 DOM component library with NaiveUI theme support",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -15,6 +15,15 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
+  "author": "jmni.cn",
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:jmni-cn/survey-manage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmni-cn/survey-manage/issues"
+  },
+  "homepage": "https://github.com/jmni-cn/survey-manage#readme",
   "dependencies": {
     "@ant-design/colors": "^7.2.0",
     "@vicons/fa": "^0.13.0",
@@ -45,11 +54,10 @@
     "vue": "^3.3.0"
   },
   "keywords": [
+    "survey",
     "vue3",
     "components",
-    "naive-ui",
     "typescript"
   ],
-  "author": "",
   "license": "MIT"
 }
