@@ -16,7 +16,13 @@
               <n-form ref="modelformRef" require-mark-placement="left" :model="formModel" :rules="validationRules" >
                 <template v-for="item in topics">
                   <n-form-item v-if="isVisible(item)" :key="item.id" :path="item.id" >
-                    <template #label><n-text :style="`color: ${survey.theme_color}`">{{ item.title }}</n-text></template>
+                    <template #label>
+                      <n-space vertical>
+                        <n-text :style="`color: ${survey.theme_color}`">{{ item.title }}</n-text>
+                        <n-text depth="3">{{ item.desc }}</n-text>
+                      </n-space>
+                    </template>
+                    
                     <template v-if="item.type === 'radio'">
                       <n-radio-group v-model:value="item.answer.value">
                         <n-space vertical>

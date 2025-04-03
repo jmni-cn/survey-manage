@@ -611,7 +611,7 @@ export default defineComponent({
   padding: 0  0 0 1%;
 
   .shadow {
-    background-image: linear-gradient(to bottom right, #fff9, #fff3);
+    // background-image: linear-gradient(to bottom right, #fff9, #fff3);
     // box-shadow: inset -1px -1px 4px #fffc;
     transition: all 0.3s ease;
     width: 100%;
@@ -635,7 +635,7 @@ export default defineComponent({
     transform: scale(1.01);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     transform: translateY(-2px);
-    background-image: linear-gradient(to bottom right, #fff9, #fff3);
+    background-image: linear-gradient(to bottom right, #fff3, #ccc);
     .hover-card{
       opacity: 1;
     }
@@ -645,7 +645,7 @@ export default defineComponent({
     transform: scale(1.01);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     transform: translateY(-2px);
-    background-image: linear-gradient(to bottom right, #fff9, #fff3);
+    background-image: linear-gradient(to bottom right, #fff3, #ccc);
     .hover-card{
       opacity: 1;
     }
