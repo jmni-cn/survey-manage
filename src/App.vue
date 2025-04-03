@@ -8,7 +8,6 @@
     preset="card"
     :bordered="false"
     :closeOnEsc="false"
-    :closable="false"
     :maskClosable="false"
   >
     <JmniSurveyPreview :topics="previewValue.topics" :survey="previewValue.surveyConfig"/>

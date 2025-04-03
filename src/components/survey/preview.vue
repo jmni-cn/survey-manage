@@ -229,7 +229,6 @@ export default defineComponent({
   position: relative;
   height: calc(100vh - 80px - 24%);
   margin: 0 auto;
-  margin-top: 80px;
   overflow: hidden;
   padding: 1% 4% 0;
   border-radius: 4px;
