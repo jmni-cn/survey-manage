@@ -28,163 +28,95 @@
         <div v-for="item in componentArr">
           <n-button size="small" @click="addTopic(item.type)">{{ item.label }}</n-button>
         </div>
-        <!-- <n-collapse :default-expanded-names="['1', '2']" arrow-placement="right">
-          <n-collapse-item title="页面设置" name="1">
-            <n-form :model="configModel">
-              <n-form-item label="标题" path="surveyTitle">
-                <n-input type="text" v-model:value="configModel.title"/>
-              </n-form-item>
-              <n-form-item label="描述" path="surveyDesc">
-                <n-input type="textarea" v-model:value="configModel.desc"/>
-              </n-form-item>
-              <n-form-item label="主题色" path="theme_color">
-                <n-color-picker v-model:value="configModel.theme_color" :show-alpha="false" />
-              </n-form-item>
-            </n-form>
-          </n-collapse-item>
-          <n-collapse-item title="添加题型" name="2">
-            <div v-for="item in componentArr">
-              <n-button size="small" @click="addTopic(item.type)">{{ item.label }}</n-button>
-            </div>
-          </n-collapse-item>
-        </n-collapse> -->
+
       </n-card>
     </div>
    
     <div class="center bg" ref="contentbgRef">
       
-      <!-- <div class="bg_shadow_q">
-        <div class="bg_shadow"></div>
-      </div> -->
-        <!-- <n-space justify="center" style="padding: 8px;">
-          <n-button v-if="type !== 'create'" type="info" size="small" @click="preview">预览</n-button>
-          <n-button  type="info" size="small" @click="save">保存</n-button>
-        </n-space> -->
         <div class="shadow_q">
           <div class="shadow">
-            <n-scrollbar  trigger="none" content-class="scrollbarContent" content-style="padding: 4% 1% 8% 0;" ref="scrollbar">
-              <div v-for="(item, index) in topics" class="question_item" :class="{ active: activeTopic?.id === item.id }">
-                <component
-                  :is="item.type"
-                  :item="item"
-                  :themeColor="configModel.theme_color"
-                  :active="activeTopic?.id === item.id"
-                  :index="item.index"
-                  @update:topics="updateTopics(index, $event)"
-                  @click="setActive(item)"
-                  class="setActive"
-                  style="padding: 8px 20px 0 46px"
-                ></component>
-                <n-card :bordered="false" size="small" class="hover-card">
-                  <template #action>
-                    <n-space>
-                      <n-popover trigger="hover">
-                        <template #trigger>
-                          <n-button  type="tertiary" size="small">添加上一题</n-button>
-                        </template>
-                        <div v-for="typeitem in componentArr">
-                          <n-button size="small" @click="addTopic(typeitem.type, index-1)">{{ typeitem.label }}</n-button>
-                        </div>
-                      </n-popover>
-                      <n-popover trigger="hover">
-                        <template #trigger>
-                          <n-button  type="tertiary" size="small">添加下一题</n-button>
-                        </template>
-                        <div v-for="typeitem in componentArr">
-                          <n-button size="small" @click="addTopic(typeitem.type, index)">{{ typeitem.label }}</n-button>
-                        </div>
-                      </n-popover>
-                      <n-button  type="tertiary" size="small" @click="delTopic(item, index)" :disabled="topics.length === 1">删除</n-button>
-                      <n-button  type="tertiary" size="small" @click="addLogic(item, index)" :disabled="index === 0">添加逻辑</n-button>
-                    </n-space>
-                  </template>
-                </n-card>
-              </div>
-              <n-space justify="center" style="margin-top: 16px;">
-                <n-button type="info" @click="preview">预览</n-button>
-                <n-button type="info" @click="save">保存</n-button>
-              </n-space>
+            <n-scrollbar  trigger="none" content-class="scrollbarContent" ref="scrollbar">
+              <n-alert type="default" :show-icon="false" :bordered="false" style="padding: 4% 1% 8% 0;">
+                <div v-for="(item, index) in topics" class="question_item" :class="{ active: activeTopic?.id === item.id }">
+                  <component
+                    :is="item.type"
+                    :item="item"
+                    :themeColor="configModel.theme_color"
+                    :active="activeTopic?.id === item.id"
+                    :index="item.index"
+                    @update:topics="updateTopics(index, $event)"
+                    @click="setActive(item)"
+                    class="setActive"
+                    style="padding: 8px 20px 0 46px"
+                  ></component>
+                  <alertlogic style="margin-top: 4px;" v-if="item?.logic?.conditions.some(v=>v.targetId)" :logicValue="item.logic"/>
+                  <n-card :bordered="false" size="small" class="hover-card">
+                    <template #action>
+                      <n-space>
+                        <n-popover trigger="hover">
+                          <template #trigger>
+                            <n-button  type="tertiary" size="small">添加上一题</n-button>
+                          </template>
+                          <div v-for="typeitem in componentArr">
+                            <n-button size="small" @click="addTopic(typeitem.type, index-1)">{{ typeitem.label }}</n-button>
+                          </div>
+                        </n-popover>
+                        <n-popover trigger="hover">
+                          <template #trigger>
+                            <n-button  type="tertiary" size="small">添加下一题</n-button>
+                          </template>
+                          <div v-for="typeitem in componentArr">
+                            <n-button size="small" @click="addTopic(typeitem.type, index)">{{ typeitem.label }}</n-button>
+                          </div>
+                        </n-popover>
+                        <n-button  type="tertiary" size="small" @click="delTopic(item, index)" :disabled="topics.length === 1">删除</n-button>
+                        <n-button  type="tertiary" size="small" @click="addLogic(item, index)" :disabled="index === 0">添加逻辑</n-button>
+                      </n-space>
+                    </template>
+                  </n-card>
+                  <n-divider style="margin-bottom:0"/>
+                </div>
+                <n-space justify="center" style="margin-top: 16px;">
+                  <n-button type="info" @click="preview">快速预览</n-button>
+                  <n-button type="info" @click="save">保存</n-button>
+                </n-space>
+              </n-alert>
             </n-scrollbar>
           </div>
-          <!-- <n-flex align="flex-start">
-            <n-float-button-group shape="square" position="relative">
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-            </n-float-button-group>
-            <n-float-button-group position="relative">
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-              <n-float-button>
-                <n-icon><CashIcon /></n-icon>
-              </n-float-button>
-            </n-float-button-group>
-          </n-flex> -->
+
         </div>
     </div> 
 
     <div class="control right" >
       <n-tabs type="line" animated>
-        <n-tab-pane name="1" tab="整卷设置">
-          Wonderwall
-        </n-tab-pane>
-        <n-tab-pane name="2" tab="题目设置">
+        <n-tab-pane name="1" tab="题目设置">
           <div v-if="activeTopic && !showLogicModal">
-            <!-- <n-card :bordered="false" size="small"  > -->
-              <n-alert :show-icon="false" title="逻辑规则" type="default" >
-                <template #header>
-                  <n-text type="info">[{{ activeTopic?.index }}: {{ activeTopic?.title }}]</n-text>
-                </template>
-                <n-space vertical >
-                  <n-space align="center">
-                    <n-text >是否必答</n-text><n-switch v-model:value="activeTopic!.check!.required" @update:value="updateTopicItemByActive"/>
-                  </n-space>
-                  <n-space vertical v-show="activeTopic!.check!.required">
-                    <n-text >未答时错误提示文案</n-text><n-input v-model:value="activeTopic!.check!.message" placeholder="" @update:value="updateTopicItemByActive"/>
-                  </n-space>
-                  <n-space align="center" v-show="activeTopic.type === 'radio' || activeTopic.type === 'checkbox'">
-                    <n-text >选项顺序随机</n-text><n-switch type="info" v-model:value="activeTopic!.isOptionRandom" @update:value="updateTopicItemByActive"/>
-                  </n-space>
-                  <n-space vertical v-show="activeTopic.type.includes('Text')">
-                    <n-text >提示文案</n-text><n-input v-model:value="activeTopic!.placeholder" placeholder="" @update:value="updateTopicItemByActive"/>
-                  </n-space>
+            <n-alert :show-icon="false" title="逻辑规则" type="default" >
+              <template #header>
+                <n-text type="info">[{{ activeTopic?.index }}: {{ activeTopic?.title }}]</n-text>
+              </template>
+              <n-space vertical >
+                <n-space align="center">
+                  <n-text >是否必答</n-text><n-switch v-model:value="activeTopic!.check!.required" @update:value="updateTopicItemByActive"/>
                 </n-space>
-              </n-alert>
-      
-              <n-alert :show-icon="false" title="逻辑规则" type="info" v-if="activeTopic?.logic?.conditions.some(v=>v.targetId)">
-                <n-space>
-                  <n-text>满足以下{{ activeTopic!.logic!.logicOperator === 'AND' ? '全部' : '任一' }}条件，展示本题。否则隐藏</n-text>
-                  <n-text type="info"></n-text>
+                <n-space vertical v-show="activeTopic!.check!.required">
+                  <n-text >未答时错误提示文案</n-text><n-input v-model:value="activeTopic!.check!.message" placeholder="" @update:value="updateTopicItemByActive"/>
                 </n-space>
-                <ul>
-                  <li v-for="(logic, li) in activeTopic?.logic?.conditions" :key="logic.targetId">
-                    条件{{li+1}}：题目
-                    <n-text type="info">{{ logic.target?.index }}: {{ logic.target?.title }}</n-text>
-                    ，{{ conditionType[logic.type as "answered" | "unanswered" | "checked" | "unchecked"]}} 
-                    <n-text v-if="logic.answerId" type="info">
-                      {{ logic.target?.options?.find(v=>v.optionId === logic.answerId)?.label}}
-                    </n-text>
-                  </li>
-                </ul>
-              </n-alert>
-            <!-- </n-card> -->
+                <!-- <n-space align="center" v-show="activeTopic.type === 'radio' || activeTopic.type === 'checkbox'">
+                  <n-text >选项顺序随机</n-text><n-switch type="info" v-model:value="activeTopic!.isOptionRandom" @update:value="updateTopicItemByActive"/>
+                </n-space> -->
+                <n-space vertical v-show="activeTopic.type.includes('Text')">
+                  <n-text >提示文案</n-text><n-input v-model:value="activeTopic!.placeholder" placeholder="" @update:value="updateTopicItemByActive"/>
+                </n-space>
+              </n-space>
+            </n-alert>
+            <!-- <alertlogic v-if="activeTopic?.logic?.conditions.some(v=>v.targetId)" :logicValue="activeTopic.logic"/> -->
+           
           </div>
+        </n-tab-pane>
+        <n-tab-pane name="2" tab="整卷设置">
+          
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -268,6 +200,7 @@ import radio from './components/radio.vue'
 import checkbox from './components/checkbox.vue'
 import singleText from './components/singleText.vue'
 import multipleText from './components/multipleText.vue'
+import alertlogic from './components/alertlogic.vue'
 import { computed, defineComponent, PropType, ref } from 'vue'
 import { generateUID, padZero } from 'jmni'
 import { type ItemQuestionLogic, type Condition } from './type'
@@ -298,6 +231,7 @@ const components = {
   multipleText,
   checkbox,
   radio,
+  alertlogic,
 };
 export default defineComponent({
   name: 'JmniSurveyEdit',
@@ -344,12 +278,7 @@ export default defineComponent({
         }
       })
     })
-    const conditionType: Record<"answered" | "unanswered" | "checked" | "unchecked", string> ={
-      answered: '已答',
-      unanswered: '未答',
-      checked: '选中',
-      unchecked: '未选中',
-    } as const
+
     const changeLogicModelOption = (condition:Condition, index:number) => {
       condition.answerId = ''
       condition.type = ''
@@ -454,14 +383,14 @@ export default defineComponent({
         }
       }
       if(type === 'checkbox'){
-        unit.options = [{optionId: generateUID(), label:'选项1', index: 'A1'},]
+        unit.options = [{optionId: generateUID(), label:'选项1', index: '01'},]
         unit.answer = {
           label: '',
           value: []
         }
       }
       if(type === 'radio'){
-        unit.options = [{optionId: generateUID(), label:'选项1', index: 'A1'},]
+        unit.options = [{optionId: generateUID(), label:'选项1', index: '01'},]
       }
       if (index !== undefined) {
         topics.value.splice(index + 1, 0, unit)
@@ -476,7 +405,7 @@ export default defineComponent({
       topics.forEach((topic:ItemQuestionLogic, index:number) => {
         topic.index = padZero(index + 1)
         topic.options?.forEach((option, i) => {
-          option.index = 'A'+(i+1)
+          option.index = padZero(i + 1)
         })
       })
     }
@@ -559,7 +488,6 @@ export default defineComponent({
       configModel,
       contentRef,
       contentbgRef,
-      conditionType,
       save,
       preview,
     }
@@ -603,16 +531,12 @@ export default defineComponent({
 .shadow_q {
   position: relative;
   backdrop-filter: blur(4px);
-  // box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.07);
-  // box-shadow: inset 1px 1px 4px #fff9;
   height: 100%;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.07);
   border-radius: 4px;
-  padding: 0  0 0 1%;
+  // padding: 0  0 0 1%;
 
   .shadow {
-    // background-image: linear-gradient(to bottom right, #fff9, #fff3);
-    // box-shadow: inset -1px -1px 4px #fffc;
     transition: all 0.3s ease;
     width: 100%;
     height: 100%;
@@ -635,7 +559,7 @@ export default defineComponent({
     transform: scale(1.01);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     transform: translateY(-2px);
-    background-image: linear-gradient(to bottom right, #fff3, #ccc);
+    // background-image: linear-gradient(to bottom right, #fff3, #ccc);
     .hover-card{
       opacity: 1;
     }
@@ -645,7 +569,7 @@ export default defineComponent({
     transform: scale(1.01);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     transform: translateY(-2px);
-    background-image: linear-gradient(to bottom right, #fff3, #ccc);
+    // background-image: linear-gradient(to bottom right, #fff3, #ccc);
     .hover-card{
       opacity: 1;
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-tag :bordered="false">{{ item.typeDesc }}{{ item.id }}</n-tag>
+    <n-tag :bordered="false" type="primary">{{ item.typeDesc }}</n-tag>
     <div class="content">
       <div class="subscript">
         <n-text type="error" v-if="item.check?.required">*</n-text>
