@@ -1,6 +1,6 @@
 {
   "name": "jmni-survey",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A Vue3 DOM component library with NaiveUI theme support",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",

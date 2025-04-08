@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/jmni-cn/survey-manage/compare/v1.1.2...v1.2.0) (2025-04-08)
+
+
+### Bug Fixes
+
+* add dependencies vicons ([3af24df](https://github.com/jmni-cn/survey-manage/commit/3af24dff2363d9e5be19b11514a71fed462b168a))
+
+
+### Features
+
+* repo 结构调整，ui优化 ([f0de16e](https://github.com/jmni-cn/survey-manage/commit/f0de16e5a8a00416c6dc4a373ede9f092351f5f7))
+
 ## [1.1.2](https://github.com/jmni-cn/survey-manage/compare/v1.1.1...v1.1.2) (2025-04-03)
 
 
