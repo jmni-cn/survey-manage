@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jmni-cn/survey-manage#readme",
   "dependencies": {
+    "@vicons/fa": "^0.13.0",
     "jmni": "^0.2.8",
     "naive-ui": "^2.35.0",
     "vue": "^3.3.0"
