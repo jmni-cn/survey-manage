@@ -91,7 +91,7 @@
     <div class="control right" >
       <n-tabs type="line" animated>
         <n-tab-pane name="1" tab="题目设置">
-          <div v-if="activeTopic && !showLogicModal">
+          <div v-if="activeTopic">
             <n-alert :show-icon="false" title="逻辑规则" type="default" >
               <template #header>
                 <n-text type="info">[{{ activeTopic?.index }}: {{ activeTopic?.title }}]</n-text>
@@ -347,7 +347,7 @@ export default defineComponent({
         logicOperator: 'AND',
       }
       setActive(item)
-      console.log(item, index);
+      // console.log(item, index);
     }
     const setActive = (item:ItemQuestionLogic) => {
       activeTopic.value = JSON.parse(JSON.stringify(item))
@@ -376,7 +376,7 @@ export default defineComponent({
         title: '请输入题目标题',
         desc: '',
         placeholder: '',
-        check: { "required": true, "message": "此题为必填项" },
+        check: { "required": true, "message": "此题为必答" },
         answer: {
           label: '',
           value: ''
@@ -435,11 +435,10 @@ export default defineComponent({
     }
     const updateTopics = (index: number, updatedItem: ItemQuestionLogic) => {
       updatedItem.options?.forEach((option, i) => {
-          option.index = 'A'+(i+1)
+          option.index = padZero(i + 1)
         })
       topics.value[index] = updatedItem
-    
-      console.log(topics.value);
+      // console.log(topics.value);
     }
 
     const preview = () => {
@@ -460,8 +459,9 @@ export default defineComponent({
       emit('save', params)
     }
 
-
-    addTopic('radio')
+    if(props.value.topics.length === 0){
+      addTopic('radio')
+    }
 
     return {
       padZero,
