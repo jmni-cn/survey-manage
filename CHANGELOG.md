@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/jmni-cn/survey-manage/compare/v1.2.2...v1.2.3) (2025-04-22)
+
+
+### Bug Fixes
+
+* 修复preview isVisible ([fceea71](https://github.com/jmni-cn/survey-manage/commit/fceea71c568c3a80f4542c9a463d142d1e0e02cf))
+
 ## [1.2.2](https://github.com/jmni-cn/survey-manage/compare/v1.2.1...v1.2.2) (2025-04-22)
 
 
