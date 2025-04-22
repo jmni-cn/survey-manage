@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/jmni-cn/survey-manage/compare/v1.2.1...v1.2.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* add login_required ([c283014](https://github.com/jmni-cn/survey-manage/commit/c283014b924ebc8be25ef49663de1e2dbcae2336))
+
 ## [1.2.1](https://github.com/jmni-cn/survey-manage/compare/v1.2.0...v1.2.1) (2025-04-09)
 
 
