@@ -14,15 +14,12 @@
           <!-- <n-form-item label="背景色" path="backgroundColor">
             <n-color-picker v-model:value="configModel.backgroundColor" :show-alpha="false" />
           </n-form-item> -->
-          <n-form-item label="主题色" path="theme_color">
+          <n-form-item label="主题色" path="theme_color" v-if="configModel.theme_color">
             <n-color-picker v-model:value="configModel.theme_color" :show-alpha="false" />
           </n-form-item>
-          <!-- <n-form-item label="主题模式" path="themeLight">
-            <n-switch v-model:value="configModel.themeLight" >
-              <template #checked>亮色</template>
-              <template #unchecked>暗色</template>
-            </n-switch>
-          </n-form-item> -->
+          <n-form-item label="是否登陆后答题" path="themeLight">
+            <n-switch v-model:value="configModel.login_required" />
+          </n-form-item>
         </n-form>
         <n-h3>添加题型</n-h3>
         <div v-for="item in componentArr">
@@ -214,9 +211,10 @@ interface ComponentItem {
 }
 interface surveyValue {
   surveyConfig: {
-    theme_color: string
     title: string
     desc: string
+    theme_color?: string
+    login_required: boolean
   }
   topics: ItemQuestionLogic[]
 }
@@ -240,9 +238,10 @@ export default defineComponent({
       type: Object as PropType<surveyValue>,
       default: () => ({
         surveyConfig: {
-          theme_color: '#000',
           title: '问卷标题',
           desc: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！',
+          theme_color: '#000',
+          login_required: true,
         },
         topics: [],
       }),

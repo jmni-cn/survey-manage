@@ -41,7 +41,8 @@ export default defineComponent({
     const surveyConfig = {
       title: "问卷标题",
       desc: "为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！",
-      theme_color: "#fff",
+      // theme_color: "#fff",
+      login_required: true,
     };
     const topics = json;
 
