@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "cd example && npm run dev",
     "build": "vite build",
     "type-check": "vue-tsc --noEmit",
     "preview": "vite preview",

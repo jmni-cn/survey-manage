@@ -68,7 +68,6 @@
 import { computed, PropType, ref } from 'vue'
 import { defineComponent } from 'vue'
 import { zhCN, dateZhCN, type ScrollbarInst, type FormInst } from 'naive-ui'
-import { CheckCircle } from '@vicons/fa'
 import type { Condition, ItemQuestionLogic } from './type'
 const PAGENUMBER = 1
 interface Survey {
@@ -94,9 +93,6 @@ export default defineComponent({
       type: Array as PropType<ItemQuestionLogic[]>,
       default: () => [],
     },
-  },
-  components: {
-    CheckCircle
   },
   setup(props, { emit }) {
     const modelformRef = ref<FormInst | null>(null)
@@ -133,30 +129,42 @@ export default defineComponent({
         scrollbar.value.scrollTo({ top: 0, behavior: 'smooth' })
       }
     }
-    const isVisible = (item: any) => {
-      if (!item.logic) return true // 没有逻辑时默认显示
+    const isVisible = (item: ItemQuestionLogic): boolean => {
+      if (!item.logic) return true
+
       const { conditions, logicOperator = 'AND' } = item.logic
-      // 遍历 conditions 判断是否满足
-      const results = conditions.map((condition: Condition) => {
+
+      const results = conditions.map((condition: Condition): boolean => {
         const target = props.topics.find((t) => t.id === condition.targetId)
         if (!target) return false
+        const targetValue = target.answer.value
         const { type, answerId } = condition
+
         switch (type) {
           case 'checked':
-            return target.answer.value === answerId
+            return Array.isArray(targetValue)
+              ? targetValue.includes(answerId!)
+              : targetValue === answerId
           case 'unchecked':
-            return target.answer.value !== answerId
+            return Array.isArray(targetValue)
+              ? !targetValue.includes(answerId!)
+              : targetValue !== answerId
           case 'answered':
-            return target.answer.value !== '' // 有值时表示已答
+            return Array.isArray(targetValue)
+              ? targetValue.length > 0
+              : targetValue !== ''
           case 'unanswered':
-            return target.answer.value === '' // 空值表示未答
+            return Array.isArray(targetValue)
+              ? targetValue.length === 0
+              : targetValue === ''
           default:
             return false
         }
       })
+
       return logicOperator === 'AND'
-        ? results.every(Boolean) // 所有条件满足
-        : results.some(Boolean) // 任意条件满足
+        ? results.every(Boolean)
+        : results.some(Boolean)
     }
 
     // 生成表单模型

@@ -320,10 +320,14 @@ export default defineComponent({
       setActive(topic!)
     }
     const removeCondition = (conditions:Condition[], index: number) => {
+      if (conditions.length === 1) {
+        conditions.splice(index, 1, addEmptyCondition())
+      }else{
         conditions.splice(index, 1)
+      }
     }
     const addCondition = (_index: number) => {
-      addEmptyCondition()
+      activeTopic.value?.logic?.conditions.push(addEmptyCondition())
     }
 
     const addEmptyCondition = () => {
@@ -332,7 +336,7 @@ export default defineComponent({
         targetId: '',
         answerId: '', // 针对选项的条件
       }
-      activeTopic.value?.logic?.conditions.push(condition)
+      return condition
     }
     const addLogic = (item:ItemQuestionLogic, index:number) => {
       showLogicModal.value = true

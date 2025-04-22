@@ -46,3 +46,33 @@ export interface ItemQuestionLogic extends ItemQuestion {
     logic?: Logic|null // 仅绑定到需要逻辑控制的目标题目
 }
 
+
+
+// =====================
+// 题型与答案映射
+// =====================
+
+export type QuestionType = 'radio' | 'checkbox' | 'singleText' | 'multipleText';
+
+export type RadioAnswer = ItemOption;
+export type CheckboxAnswer = ItemOption[];
+export type TextAnswer = string;
+
+export type AnswerTypeMap = {
+  radio: RadioAnswer;
+  checkbox: CheckboxAnswer;
+  singleText: TextAnswer;
+  multipleText: TextAnswer;
+};
+
+export type AnswerValue = RadioAnswer | CheckboxAnswer | TextAnswer;
+
+// 每道题的答案，key 是题目 id，value 是答案
+export type AnswersData = Record<string, AnswerValue>;
+
+// 未来可以支持泛型推导每个 id 的答案类型（如需）
+export type TypedAnswersData<T extends ItemQuestionLogic[]> = {
+  [K in T[number] as K['id']]: K['type'] extends keyof AnswerTypeMap
+    ? AnswerTypeMap[K['type']]
+    : never;
+};
