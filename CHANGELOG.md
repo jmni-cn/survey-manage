@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/jmni-cn/survey-manage/compare/v1.3.1...v1.3.2) (2025-04-25)
+
+
+### Bug Fixes
+
+* 修复逻辑设置 ([cc5a65a](https://github.com/jmni-cn/survey-manage/commit/cc5a65a9624b83e02b45fc4d9d598753bc7a4f66))
+
 ## [1.3.1](https://github.com/jmni-cn/survey-manage/compare/v1.3.0...v1.3.1) (2025-04-25)
 
 
