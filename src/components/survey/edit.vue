@@ -476,7 +476,7 @@ export default defineComponent({
       const answer_limit_date = configModel.value.answer_limit_date
       const theme_color = configModel.value.theme_color
       const params:any = {
-        content: JSON.stringify(topics.value),
+        topics: JSON.stringify(topics.value),
         title: configModel.value.title,
         desc: configModel.value.desc,
         login_required: configModel.value.login_required,

@@ -62,13 +62,13 @@ export default defineComponent({
     const preview = (params) => {
       // previewValue.value = JSON.parse(JSON.stringify(params));
       previewValue.value = params;
-      previewValue.value.topics = JSON.parse(params.content);
+      previewValue.value.topics = JSON.parse(params.topics);
 
       console.log("preview", previewValue.value);
       showPreview.value = true;
     };
     const save = (params) => {
-      params.content = JSON.parse((params.content));
+      params.topics = JSON.parse((params.topics));
       console.log("test", params);
 
       
