@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/jmni-cn/survey-manage/compare/v1.3.0...v1.3.1) (2025-04-25)
+
+
+### Bug Fixes
+
+* update topics name ([5a1905f](https://github.com/jmni-cn/survey-manage/commit/5a1905fe5020d79eed02d2ba562df38e4d461ba5))
+
 # [1.3.0](https://github.com/jmni-cn/survey-manage/compare/v1.2.3...v1.3.0) (2025-04-25)
 
 
