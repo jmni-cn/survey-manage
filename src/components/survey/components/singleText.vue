@@ -4,7 +4,7 @@
     <div class="content">
       <div class="subscript">
         <n-text type="error" v-if="item.check?.required">*</n-text>
-        <n-text :style="`color: ${themeColor}`">{{ index }}</n-text>
+        <n-text v-if="showQuestionIndex" :style="`color: ${themeColor}`">{{ index }}</n-text>
       </div>
       <div v-show="!active">
         <p class="line title"><n-text :style="`color: ${themeColor}`">{{ item.title }}</n-text></p>
@@ -40,7 +40,9 @@ export default defineComponent({
     },
     themeColor: {
       type: String,
-      default: '#000',
+    },
+    showQuestionIndex: {
+      type: Boolean,
     },
   },
   emits: ['update:topics'], // 用于同步到父组件
@@ -53,12 +55,10 @@ export default defineComponent({
       emit('update:topics', props.item)
     }
     const updateTitle = (value: string) => {
-      console.log(value);
       updateItem('title', value)
     }
 
     const updateDesc = (value: string) => {
-      console.log(value);
       updateItem('desc', value)
     }
 

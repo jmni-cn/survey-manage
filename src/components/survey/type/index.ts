@@ -1,4 +1,19 @@
 
+
+export interface SurveyValue {
+    surveyConfig: SurveyConfig
+    topics: ItemQuestionLogic[]
+  }
+
+export interface SurveyConfig {
+    title: string
+    desc: string
+    theme_color?: string
+    login_required: boolean
+    answer_limit_date: boolean
+    show_question_index: boolean
+    datetimerange?: number[]
+}
 export interface ItemOption {
     optionId: string
     label: string
@@ -6,7 +21,7 @@ export interface ItemOption {
 }
 export interface QuestionConfig {
     placeholder?: string
-    isOptionRandom?: string//选项顺序随机
+    isOptionRandom: boolean//选项顺序随机
     check: {
         required: boolean//是否必答
         message: string//未答时错误提示文案
@@ -47,10 +62,6 @@ export interface ItemQuestionLogic extends ItemQuestion {
 }
 
 
-
-// =====================
-// 题型与答案映射
-// =====================
 
 export type QuestionType = 'radio' | 'checkbox' | 'singleText' | 'multipleText';
 

@@ -2,31 +2,68 @@
   <div class="edit" id="editContent"  ref="contentRef" @click="handleClick">
 
     <div class="control left">
-      <n-card :bordered="false" size="small">
-        <n-h3>页面设置</n-h3>
-        <n-form :model="configModel">
-          <n-form-item label="标题" path="surveyTitle">
-            <n-input type="text" v-model:value="configModel.title"/>
-          </n-form-item>
-          <n-form-item label="描述" path="surveyDesc">
-            <n-input type="textarea" v-model:value="configModel.desc"/>
-          </n-form-item>
-          <!-- <n-form-item label="背景色" path="backgroundColor">
-            <n-color-picker v-model:value="configModel.backgroundColor" :show-alpha="false" />
-          </n-form-item> -->
-          <n-form-item label="主题色" path="theme_color" v-if="configModel.theme_color">
-            <n-color-picker v-model:value="configModel.theme_color" :show-alpha="false" />
-          </n-form-item>
-          <n-form-item label="是否登陆后答题" path="themeLight">
-            <n-switch v-model:value="configModel.login_required" />
-          </n-form-item>
-        </n-form>
-        <n-h3>添加题型</n-h3>
-        <div v-for="item in componentArr">
-          <n-button size="small" @click="addTopic(item.type)">{{ item.label }}</n-button>
-        </div>
+      <n-scrollbar  trigger="none" content-class="scrollbarContent" ref="scrollbar">
 
-      </n-card>
+        <n-alert :show-icon="false" :bordered="false" title="题目设置" type="info" >
+          <template #header>
+            <n-text type="primary" style="font-size: 18px;">题目设置</n-text>
+          </template>
+          <n-collapse-transition :show="!!activeTopic?.id">
+            <n-text type="primary">[{{ activeTopic?.index }}: {{ activeTopic?.title }}]</n-text>
+            <n-space vertical v-if="activeTopic">
+              <n-space align="center">
+                <n-text >是否必答</n-text><n-switch v-model:value="activeTopic!.check!.required" @update:value="updateTopicItemByActive"/>
+              </n-space>
+              <n-space vertical v-show="activeTopic!.check!.required">
+                <n-text >未答时错误提示文案</n-text><n-input v-model:value="activeTopic!.check!.message" placeholder="" @update:value="updateTopicItemByActive"/>
+              </n-space>
+              <!-- <n-space align="center" v-show="activeTopic.type === 'radio' || activeTopic.type === 'checkbox'">
+                <n-text >选项顺序随机</n-text><n-switch type="info" v-model:value="activeTopic!.isOptionRandom" @update:value="updateTopicItemByActive"/>
+              </n-space> -->
+              <n-space vertical v-show="activeTopic.type.includes('Text')">
+                <n-text >提示文案</n-text><n-input v-model:value="activeTopic!.placeholder" placeholder="" @update:value="updateTopicItemByActive"/>
+              </n-space>
+            </n-space>
+          </n-collapse-transition>
+        </n-alert>
+
+        <n-alert :show-icon="false" :bordered="false" type="default">
+          <n-h3><n-text type="primary" style="font-size: 18px;">整卷设置</n-text></n-h3>
+          <n-form :model="configModel">
+            <n-form-item label="标题" path="surveyTitle">
+              <n-input type="text" v-model:value="configModel.title"/>
+            </n-form-item>
+            <n-form-item label="描述" path="surveyDesc">
+              <n-input type="textarea" v-model:value="configModel.desc"/>
+            </n-form-item>
+            <n-form-item label="主题色" path="theme_color" v-if="configModel.theme_color">
+              <n-color-picker v-model:value="configModel.theme_color" :show-alpha="false" />
+            </n-form-item>
+            <n-form-item label="限制登陆后答题" path="themeLight">
+              <n-switch v-model:value="configModel.login_required" />
+            </n-form-item>
+            <n-form-item :label="'限制答卷日期范围 ' + formatTimeZoneOffset()" path="themeLight">
+              <n-space align="center">
+                <n-switch v-model:value="configModel.answer_limit_date" />
+                <n-date-picker v-if="configModel.answer_limit_date" v-model:value="configModel.datetimerange" type="datetimerange" />
+              </n-space>
+            </n-form-item>
+            <n-form-item label="显示题目序号" path="themeLight">
+              <n-switch v-model:value="configModel.show_question_index" />
+            </n-form-item>
+          </n-form>
+          <n-h3><n-text type="primary" style="font-size: 18px;">添加题目</n-text></n-h3>
+          <div v-for="item in componentArr">
+            <n-button size="small" @click="addTopic(item.type)">{{ item.label }}</n-button>
+          </div>
+        </n-alert>
+
+        <n-space justify="center" style="margin: 30px 0;">
+          <n-button type="info" @click="preview">快速预览</n-button>
+          <n-button type="info" @click="save">保存</n-button>
+        </n-space>
+      </n-scrollbar>
+      
     </div>
    
     <div class="center bg" ref="contentbgRef">
@@ -36,17 +73,20 @@
             <n-scrollbar  trigger="none" content-class="scrollbarContent" ref="scrollbar">
               <n-alert type="default" :show-icon="false" :bordered="false" style="padding: 4% 1% 8% 0;">
                 <div v-for="(item, index) in topics" class="question_item" :class="{ active: activeTopic?.id === item.id }">
-                  <component
-                    :is="item.type"
-                    :item="item"
-                    :themeColor="configModel.theme_color"
-                    :active="activeTopic?.id === item.id"
-                    :index="item.index"
-                    @update:topics="updateTopics(index, $event)"
-                    @click="setActive(item)"
-                    class="setActive"
-                    style="padding: 8px 20px 0 46px"
-                  ></component>
+                  <n-card size="small" :bordered="false" style="padding: 0;">
+                    <component
+                      :is="item.type"
+                      :item="item"
+                      :themeColor="configModel.theme_color"
+                      :showQuestionIndex="configModel.show_question_index"
+                      :active="activeTopic?.id === item.id"
+                      :index="item.index"
+                      @update:topics="updateTopics(index, $event)"
+                      @click="setActive(item)"
+                      class="setActive"
+                      style="padding: 8px 20px 0 46px"
+                    ></component>
+                  </n-card>
                   <alertlogic style="margin-top: 4px;" v-if="item?.logic?.conditions.some(v=>v.targetId)" :logicValue="item.logic"/>
                   <n-card :bordered="false" size="small" class="hover-card">
                     <template #action>
@@ -74,49 +114,12 @@
                   </n-card>
                   <n-divider style="margin-bottom:0"/>
                 </div>
-                <n-space justify="center" style="margin-top: 16px;">
-                  <n-button type="info" @click="preview">快速预览</n-button>
-                  <n-button type="info" @click="save">保存</n-button>
-                </n-space>
               </n-alert>
             </n-scrollbar>
           </div>
 
         </div>
     </div> 
-
-    <div class="control right" >
-      <n-tabs type="line" animated>
-        <n-tab-pane name="1" tab="题目设置">
-          <div v-if="activeTopic">
-            <n-alert :show-icon="false" title="逻辑规则" type="default" >
-              <template #header>
-                <n-text type="info">[{{ activeTopic?.index }}: {{ activeTopic?.title }}]</n-text>
-              </template>
-              <n-space vertical >
-                <n-space align="center">
-                  <n-text >是否必答</n-text><n-switch v-model:value="activeTopic!.check!.required" @update:value="updateTopicItemByActive"/>
-                </n-space>
-                <n-space vertical v-show="activeTopic!.check!.required">
-                  <n-text >未答时错误提示文案</n-text><n-input v-model:value="activeTopic!.check!.message" placeholder="" @update:value="updateTopicItemByActive"/>
-                </n-space>
-                <!-- <n-space align="center" v-show="activeTopic.type === 'radio' || activeTopic.type === 'checkbox'">
-                  <n-text >选项顺序随机</n-text><n-switch type="info" v-model:value="activeTopic!.isOptionRandom" @update:value="updateTopicItemByActive"/>
-                </n-space> -->
-                <n-space vertical v-show="activeTopic.type.includes('Text')">
-                  <n-text >提示文案</n-text><n-input v-model:value="activeTopic!.placeholder" placeholder="" @update:value="updateTopicItemByActive"/>
-                </n-space>
-              </n-space>
-            </n-alert>
-            <!-- <alertlogic v-if="activeTopic?.logic?.conditions.some(v=>v.targetId)" :logicValue="activeTopic.logic"/> -->
-           
-          </div>
-        </n-tab-pane>
-        <n-tab-pane name="2" tab="整卷设置">
-          
-        </n-tab-pane>
-      </n-tabs>
-    </div>
   </div>
 
   <n-modal
@@ -199,7 +202,7 @@ import singleText from './components/singleText.vue'
 import multipleText from './components/multipleText.vue'
 import alertlogic from './components/alertlogic.vue'
 import { computed, defineComponent, PropType, ref } from 'vue'
-import { generateUID, padZero } from 'jmni'
+import { formatTimeZoneOffset, generateUID, padZero } from 'jmni'
 import { type ItemQuestionLogic, type Condition } from './type'
 import type { ScrollbarInst } from 'naive-ui'
 import { Plus, Minus } from '@vicons/fa'
@@ -208,15 +211,6 @@ interface ComponentItem {
   type: string
   label: string
   key: string
-}
-interface surveyValue {
-  surveyConfig: {
-    title: string
-    desc: string
-    theme_color?: string
-    login_required: boolean
-  }
-  topics: ItemQuestionLogic[]
 }
 const componentArr: ComponentItem[] = [
   {type: 'radio', label: '单选', key: 'radio',},
@@ -234,17 +228,36 @@ const components = {
 export default defineComponent({
   name: 'JmniSurveyEdit',
   props: {
-    value: {
-      type: Object as PropType<surveyValue>,
-      default: () => ({
-        surveyConfig: {
-          title: '问卷标题',
-          desc: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！',
-          theme_color: '#000',
-          login_required: true,
-        },
-        topics: [],
-      }),
+    title: {
+      type: String,
+      default: '问卷标题',
+    },
+    desc: {
+      type: String,
+      default: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！',
+    },
+    theme_color: {
+      type: String,
+    },
+    login_required: {
+      type: Boolean,
+      default: false,
+    },
+    show_question_index: {
+      type: Boolean,
+      default: false,
+    },
+    answer_limit_date: {
+      type: Boolean,
+      default: false,
+    },
+    datetimerange: {
+      type: Array as PropType<number[]>,
+      default: () => [Date.now(), Date.now() + 7 * 24 * 60 * 60 * 1000],
+    },
+    topics: {
+      type: Array as PropType<ItemQuestionLogic[]>,
+      default: () => [],
     },
   },
   components: {
@@ -260,10 +273,17 @@ export default defineComponent({
 
     const scrollbar = ref<ScrollbarInst | null>(null)
     const showLogicModal = ref(false)
-    const topics = ref<ItemQuestionLogic[]>(props.value.topics)
-    const configModel = ref(props.value.surveyConfig)
+    const topics = ref<ItemQuestionLogic[]>(props.topics)
+    const configModel = ref({
+      title: props.title,
+      desc: props.desc,
+      theme_color: props.theme_color,
+      login_required: props.login_required,
+      show_question_index: props.show_question_index,
+      answer_limit_date: props.answer_limit_date,
+      datetimerange: props.datetimerange,
+    })
 
-    
     const logicTopics = ref<ItemQuestionLogic[]>([])
     const activeTopic = ref<ItemQuestionLogic | null>(null)
     // const currentLogics = ref<Logic| null>(null) // 当前编辑的逻辑
@@ -353,7 +373,11 @@ export default defineComponent({
       // console.log(item, index);
     }
     const setActive = (item:ItemQuestionLogic) => {
-      activeTopic.value = JSON.parse(JSON.stringify(item))
+      if (activeTopic.value?.id === item.id) {
+        return
+      }
+      clearActive()
+      Promise.resolve().then(()=> activeTopic.value = JSON.parse(JSON.stringify(item)))
     }
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement
@@ -369,7 +393,7 @@ export default defineComponent({
       let currentTopicTop = 0
       if(index){
         const currentTopicElement = document.querySelectorAll('.question_item')[index] as HTMLElement;
-        currentTopicTop = currentTopicElement.offsetTop
+        currentTopicTop = currentTopicElement?.offsetTop
       }
       const typeDesc = componentArr.find(v => v.type === type)?.label
       const unit:ItemQuestionLogic = {
@@ -379,6 +403,7 @@ export default defineComponent({
         title: '请输入题目标题',
         desc: '',
         placeholder: '',
+        isOptionRandom: false,
         check: { "required": true, "message": "此题为必答" },
         answer: {
           label: '',
@@ -448,12 +473,23 @@ export default defineComponent({
       emit('preview', getParams())
     }
     const getParams = () => {
-      const params = {
-        // value: JSON.parse(JSON.stringify(topics.value)),
+      const answer_limit_date = configModel.value.answer_limit_date
+      const theme_color = configModel.value.theme_color
+      const params:any = {
         content: JSON.stringify(topics.value),
-        title: props.value.surveyConfig.title,
-        desc: props.value.surveyConfig.desc,
-        theme_color: props.value.surveyConfig.theme_color
+        title: configModel.value.title,
+        desc: configModel.value.desc,
+        login_required: configModel.value.login_required,
+        answer_limit_date,
+        show_question_index: configModel.value.show_question_index,
+      }
+      if(theme_color){
+        params.theme_color = theme_color
+      }
+      if(answer_limit_date){
+        params.start_time = configModel.value.datetimerange?.[0]
+        params.end_time = configModel.value.datetimerange?.[1]
+        params.datetimerange = configModel.value.datetimerange
       }
       return params
     }
@@ -462,12 +498,13 @@ export default defineComponent({
       emit('save', params)
     }
 
-    if(props.value.topics.length === 0){
+    if(props.topics.length === 0){
       addTopic('radio')
     }
 
     return {
       padZero,
+      formatTimeZoneOffset,
       scrollbar,
       showLogicModal,
       changeLogicModelOption,
@@ -506,28 +543,20 @@ export default defineComponent({
   min-width: 1180px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  gap: 20px;
 }
 .control{
   z-index: 1;
 }
-.left,
-.right {
-  min-width: 200px;
-}
 .left{
-  width: 200px;
-  left: 0;
-}
-.right {
-  right:0;
-  width: 360px;
-  padding-left: 10px;
+  min-width: 300px;
+  width: 30%;
+
+  height: 100%;
 }
 .center{
-  max-width: 980px;
   min-width: 680px;
-  width: 100%;
+  width: 70%;
   height: 100%;
 }
 

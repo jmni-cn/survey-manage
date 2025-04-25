@@ -1,58 +1,67 @@
 <template>
-  <n-alert v-if="answer_limit_date" type="info" :bordered="false" :show-icon="false" style="margin: 4px 0">
-    问卷答题时间: {{ formatDate(datetimerange[0], 'yyyy-MM-dd HH:mm:ss') }} - {{ formatDate(datetimerange[1], 'yyyy-MM-dd HH:mm:ss') }}
-  </n-alert>
-  <div v-if="step === 1" class="step1">
-    <n-h2 style="text-align: center;"><n-text>{{ title }}</n-text></n-h2>
-    <p style="margin-top: 30px;"><n-text>{{ desc }}</n-text></p>
-    <div class="startbtn">
-      <n-button class="btn" type="primary" @click="start">开始填写</n-button>
+  <!-- <div class="preview_question" :style="'background-color: ' + survey.bgcolor"> -->
+  <div class="preview_question">
+      <template v-if="step === 1">
+        <n-h3>
+          <n-text>{{ title }}</n-text>
+        </n-h3>
+        <n-p><n-text>{{ desc }}</n-text></n-p>
+        <n-button @click="start">开始填写</n-button>
+      </template>
+      <template v-if="step === 2">
+        <n-progress type="line" :show-indicator="false" status="default" :percentage="percentage" />
+        <div class="preview_content">
+          <n-scrollbar content-class="scrollbar_content" ref="scrollbar">
+            
+              <n-form ref="modelformRef" require-mark-placement="left" :model="formModel" :rules="validationRules" >
+                <template v-for="item in topics">
+                  <n-form-item v-if="isVisible(item)" :key="item.id" :path="item.id" >
+                    <template #label>
+                      <n-space vertical>
+                        <n-text :style="`color: ${theme_color}`">{{ item.title }}</n-text>
+                        <n-text depth="3">{{ item.desc }}</n-text>
+                      </n-space>
+                    </template>
+                    
+                    <template v-if="item.type === 'radio'">
+                      <n-radio-group v-model:value="item.answer.value">
+                        <n-space vertical>
+                          <n-radio v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-radio>
+                        </n-space>
+                      </n-radio-group>
+                    </template>
+                    <template v-if="item.type === 'checkbox'">
+                      <n-checkbox-group v-model:value="item.answer.value">
+                        <n-space vertical>
+                          <n-checkbox v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-checkbox>
+                        </n-space>
+                      </n-checkbox-group>
+                    </template>
+                    <template v-if="item.type === 'singleText'">
+                      <n-input v-model:value="item.answer.value" type="text" :placeholder="item.placeholder" />
+                    </template>
+                    <template v-if="item.type === 'multipleText'">
+                      <n-input v-model:value="item.answer.value" type="textarea" :placeholder="item.placeholder" />
+                    </template>
+                  </n-form-item>
+                </template>
+              </n-form>
+              <n-button @click="handleSubmit">提交</n-button>
+          </n-scrollbar>
+        </div>
+        </template>
+        <template v-if="step === 3"> </template>
     </div>
-  </div>
-
-
-  <n-form v-if="step === 2" ref="modelformRef" require-mark-placement="left" :model="formModel" :rules="validationRules" class="step2">
-    <template v-for="item in topics">
-      <n-form-item v-if="isVisible(item)" :key="item.id" :path="item.id" >
-
-        <template #label>
-          <n-space vertical>
-            <n-text type="primary"><n-text type="primary" v-if="show_question_index">{{ getVisibleIndex(item.id) }}：</n-text>{{ item.title }}</n-text>
-            <n-text depth="3">{{ item.desc }}</n-text>
-          </n-space>
-        </template>
-
-
-        <template v-if="item.type === 'radio'">
-          <n-radio-group v-model:value="item.answer.value">
-            <n-space vertical>
-              <n-radio v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-radio>
-            </n-space>
-          </n-radio-group>
-        </template>
-        <template v-if="item.type === 'checkbox'">
-          <n-checkbox-group v-model:value="item.answer.value">
-            <n-space vertical>
-              <n-checkbox v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-checkbox>
-            </n-space>
-          </n-checkbox-group>
-        </template>
-        <template v-if="item.type === 'singleText'">
-          <n-input v-model:value="item.answer.value" type="text" :placeholder="item.placeholder" />
-        </template>
-        <template v-if="item.type === 'multipleText'">
-          <n-input v-model:value="item.answer.value" type="textarea" :placeholder="item.placeholder" />
-        </template>
-      </n-form-item>
-
-      <n-divider v-if="isVisible(item)"  />
-    </template>
-
-    <div class="submitbtn">
-      <n-button class="btn" :loading="submitLoading" @click="handleSubmit" type="primary">提交</n-button>
-    </div>
-  </n-form>
-
+    <n-modal
+      v-model:show="showModal"
+      :bordered="false"
+      :maskClosable="false"
+      :close-on-esc="false"
+      preset="dialog"
+      :showIcon="false"
+    >
+    {{ resMsg }}
+  </n-modal>
 </template>
 
 <script lang="ts">
@@ -60,9 +69,12 @@ import { computed, PropType, ref } from 'vue'
 import { defineComponent } from 'vue'
 import { zhCN, dateZhCN, type ScrollbarInst, type FormInst } from 'naive-ui'
 import type { Condition, ItemQuestionLogic } from './type'
-import { formatDate, padZero } from 'jmni'
 const PAGENUMBER = 1
-
+interface Survey {
+  title: string
+  desc: string
+  theme_color: string
+}
 export default defineComponent({
   props: {
     title: {
@@ -132,20 +144,6 @@ export default defineComponent({
         scrollbar.value.scrollTo({ top: 0, behavior: 'smooth' })
       }
     }
-
-    const visibleTopics = computed(() =>
-      props.topics.filter((item) => isVisible(item))
-    )
-    const visibleIndexMap = computed(() => {
-      const map = new Map<string, number|string>()
-      visibleTopics.value.forEach((item, idx) => {
-        map.set(item.id, padZero(idx + 1))
-      })
-      return map
-    })
-
-    const getVisibleIndex = (id: string) => visibleIndexMap.value.get(id)
-
     const isVisible = (item: ItemQuestionLogic): boolean => {
       if (!item.logic) return true
 
@@ -242,47 +240,28 @@ export default defineComponent({
       modelformRef,
       showModal,
       resMsg,
-      submitLoading,
-      getVisibleIndex,
-      formatDate
+      submitLoading
     }
   }
 })
 </script>
 
-<style lang="scss" scoped>
-.step1{
-  padding: 60px 80px 0;
-}
-.step2{
-  padding: 30px 80px 0;
-}
-.submitbtn{
-  display: flex;
-  margin-top: 30px;
-}
-.startbtn{
-  display: flex;
-  justify-content: center;
-  margin: 100px auto 0;
-}
-@media screen and (max-width: 640px) {
-  .step1{
-    padding: 120px 6px 0;
-  }
-  .step2{
-    padding: 30px 6px;
-  }
-  .submitbtn{
-    justify-content: center;
-    .btn{
-      width: 90%;
-    }
-  }
-  .startbtn{
-    .btn{
-      width: 90%;
-    }
+<style lang="scss">
+
+.preview_question {
+  position: relative;
+  height: calc(100vh - 80px - 24%);
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 1% 4% 0;
+  border-radius: 4px;
+  .preview_content {
+    padding-top: 2%;
+    height: 100%;
+    overflow-y: auto;
   }
 }
+
+
+
 </style>

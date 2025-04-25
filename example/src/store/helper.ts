@@ -103,8 +103,6 @@ export function getThemeColors(
 ): ThemeColor {
   const themeColor: ThemeColor = {}
   const keys = Object.keys(config) as ColorType[]
-  console.log(keys);
-  
   
   const colorActions: ColorAction[] = [
     { scene: '', handler: (color) => getGenerateColors(color, darkMode)[5] },
@@ -153,8 +151,6 @@ export function getThemeOverrides(
   darkMode: boolean = false
 ): GlobalThemeOverrides {
   const themeColors = getThemeColors(config, darkMode)
-  console.log(themeColors);
-  
   return {
     common: {
       // ...themeColors,

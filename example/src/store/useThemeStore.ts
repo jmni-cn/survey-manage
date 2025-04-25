@@ -2,7 +2,12 @@ import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { getThemeOverrides, getGenerateColors } from './helper'
 import { darkTheme } from 'naive-ui'
-
+/** 颜色类型 */
+type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
+// 主题配置
+type Config = {
+  [key in ColorType]: string
+}
 import { useColorMode, useCycleList, type BasicColorSchema } from '@vueuse/core'
 export const themeConfigs = {
   primary: '#f2aa00',
@@ -48,7 +53,7 @@ export const useThemeStore = defineStore('theme', () => {
   })
 
   /** 主题配置 */
-  const themeConfig = ref<NTheme.Config>(themeConfigs)
+  const themeConfig = ref<Config>(themeConfigs)
 
   /** 主题 */
   const theme = computed(() => (darkMode.value ? darkTheme : null))
@@ -61,10 +66,10 @@ export const useThemeStore = defineStore('theme', () => {
   /** 主题颜色 */
   const themeColors = computed(() => {
     const entries = Object.entries(themeConfig.value) as [
-      NTheme.ColorType,
+      ColorType,
       string
     ][]
-    const colors = {} as Record<NTheme.ColorType, string[]>
+    const colors = {} as Record<ColorType, string[]>
     entries.forEach(([key, value]) => {
       colors[key] = getGenerateColors(value, darkMode.value)
     })
@@ -78,7 +83,7 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   /** 手动设置主题 */
-  function setThemeConfig(config: NTheme.Config) {
+  function setThemeConfig(config: Config) {
     themeConfig.value = {
       ...themeConfig.value,
       ...config
