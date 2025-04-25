@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/jmni-cn/survey-manage/compare/v1.2.3...v1.3.0) (2025-04-25)
+
+
+### Features
+
+* add answer_limit_date show_question_index ([a4aff67](https://github.com/jmni-cn/survey-manage/commit/a4aff67e6259394866f4efd3cbc659690ad5b77e))
+
 ## [1.2.3](https://github.com/jmni-cn/survey-manage/compare/v1.2.2...v1.2.3) (2025-04-22)
 
 
