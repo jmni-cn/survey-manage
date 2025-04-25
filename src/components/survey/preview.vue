@@ -59,7 +59,7 @@
 import { computed, PropType, ref } from 'vue'
 import { defineComponent } from 'vue'
 import { zhCN, dateZhCN, type ScrollbarInst, type FormInst } from 'naive-ui'
-import type { Condition, ItemQuestionLogic } from './type'
+import type { AnswerValue, Condition, ItemOption, ItemQuestionLogic } from './type'
 import { formatDate, padZero } from 'jmni'
 const PAGENUMBER = 1
 
@@ -92,20 +92,25 @@ export default defineComponent({
       type: String as PropType<'preview' | 'write'>,
       default: 'write',
     },
+    submitLoading: {
+      type: Boolean,
+      default: false,
+    },
     topics: {
       type: Array as PropType<ItemQuestionLogic[]>,
       default: () => [],
     },
   },
+  emits: ['submit'],
   setup(props, { emit }) {
     const modelformRef = ref<FormInst | null>(null)
 
     const scrollbar = ref<ScrollbarInst | null>(null)
     const step = ref(1)
     const page = ref(1)
-    const submitLoading = ref(false)
     const showModal = ref(false)
     const resMsg = ref('')
+    const startTime = ref(0)
 
     const percentage = computed(() => {
       return (page.value * 100) / PAGENUMBER
@@ -114,6 +119,7 @@ export default defineComponent({
     const start = () => {
       step.value = 2
       page.value = 1
+      startTime.value = Date.now()
     }
     const scrollTofeedback = () => {
       const elArr = Array.from(
@@ -146,38 +152,45 @@ export default defineComponent({
 
     const getVisibleIndex = (id: string) => visibleIndexMap.value.get(id)
 
-    const isVisible = (item: ItemQuestionLogic): boolean => {
+    const isVisible = (item: ItemQuestionLogic) => {
       if (!item.logic) return true
 
       const { conditions, logicOperator = 'AND' } = item.logic
 
-      const results = conditions.map((condition: Condition): boolean => {
-        const target = props.topics.find((t) => t.id === condition.targetId)
-        if (!target) return false
-        const targetValue = target.answer.value
-        const { type, answerId } = condition
+      const results = conditions
+        .map((condition: Condition) => {
+          const target = props.topics.find((t) => t.id === condition.targetId)
+          const { type, answerId } = condition
 
-        switch (type) {
-          case 'checked':
-            return Array.isArray(targetValue)
-              ? targetValue.includes(answerId!)
-              : targetValue === answerId
-          case 'unchecked':
-            return Array.isArray(targetValue)
-              ? !targetValue.includes(answerId!)
-              : targetValue !== answerId
-          case 'answered':
-            return Array.isArray(targetValue)
-              ? targetValue.length > 0
-              : targetValue !== ''
-          case 'unanswered':
-            return Array.isArray(targetValue)
-              ? targetValue.length === 0
-              : targetValue === ''
-          default:
-            return false
-        }
-      })
+          if (!target || !type) return null
+
+          const targetValue = target.answer.value
+
+          switch (type) {
+              case 'checked':
+                return Array.isArray(targetValue)
+                  ? targetValue.includes(answerId!)
+                  : targetValue === answerId
+              case 'unchecked':
+                return Array.isArray(targetValue)
+                  ? !targetValue.includes(answerId!)
+                  : targetValue !== answerId
+              case 'answered':
+                return Array.isArray(targetValue)
+                  ? targetValue.length > 0
+                  : targetValue !== ''
+              case 'unanswered':
+                return Array.isArray(targetValue)
+                  ? targetValue.length === 0
+                  : targetValue === ''
+              default:
+                return false
+            }
+        })
+        .filter((result:any) => result !== null)
+
+      // 如果没有有效的判断条件，默认返回 true
+      if (results.length === 0) return true
 
       return logicOperator === 'AND'
         ? results.every(Boolean)
@@ -210,13 +223,40 @@ export default defineComponent({
         {} as Record<string, any>
       )
     )
+
+    const parseAnswers = (data: ItemQuestionLogic[], userAnswersData: Record<string, string | string[]>) => {
+      const answersdata: Record<string, AnswerValue> = {}
+      data.forEach((question) => {
+        const { id, type, options = [] } = question;
+        const answer = userAnswersData[id];
+        const getOptionLabel = (optionId: string): ItemOption => {
+          const option = options.find((opt) => opt.optionId === optionId);
+          if (!option) {
+            throw new Error(`Option with ID ${optionId} not found`);
+          }
+          return option;
+        };
+        
+        if (type === 'radio') {
+          answersdata[id] = getOptionLabel(answer as string) as ItemOption;
+        } else if (type === 'checkbox' && Array.isArray(answer)) {
+          answersdata[id] = (answer as string[]).map(getOptionLabel) as ItemOption[];
+        } else if (type === 'singleText' || type === 'multipleText') {
+          answersdata[id] = answer as string;
+        }
+      });
+      return answersdata
+    }
     // 提交表单
     const handleSubmit = () => {
       modelformRef.value?.validate((errors: any) => {
         if (!errors) {
-          console.log('提交成功:', formModel.value)
-          emit('submit', formModel.value)
-          submitLoading.value = true
+          const params = {
+            answers: parseAnswers(props.topics, formModel.value),
+            duration: (Date.now() - startTime.value)/1000,
+          }
+          console.log('提交成功:', params)
+          emit('submit', params)
         } else {
           scrollTofeedback()
           console.log('校验失败:', errors)
@@ -242,7 +282,6 @@ export default defineComponent({
       modelformRef,
       showModal,
       resMsg,
-      submitLoading,
       getVisibleIndex,
       formatDate
     }

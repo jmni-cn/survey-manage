@@ -12,9 +12,10 @@
             :login_required="true"
             :show_question_index="true"
             @save="save" @preview="preview" />
+
           <n-modal
             v-model:show="showPreview"
-            style="width: 780px"
+            style="width: 780px;"
             preset="card"
             :bordered="false"
             :closeOnEsc="false"

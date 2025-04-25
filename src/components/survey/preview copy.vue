@@ -70,11 +70,7 @@ import { defineComponent } from 'vue'
 import { zhCN, dateZhCN, type ScrollbarInst, type FormInst } from 'naive-ui'
 import type { Condition, ItemQuestionLogic } from './type'
 const PAGENUMBER = 1
-interface Survey {
-  title: string
-  desc: string
-  theme_color: string
-}
+
 export default defineComponent({
   props: {
     title: {
