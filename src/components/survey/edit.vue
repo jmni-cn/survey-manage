@@ -320,22 +320,15 @@ export default defineComponent({
       }
     }
     const confirmLogic = () => {
-      topics.value.find(v => v.id === activeTopic.value?.id)!.logic = activeTopic.value?.logic
+      // topics.value.find(v => v.id === activeTopic.value?.id)!.logic = activeTopic.value?.logic
+      topics.value.find(v => v.id === activeTopic.value?.id)!.logic = JSON.parse(JSON.stringify(activeTopic.value?.logic))
       showLogicModal.value = false
-    }
-    const updateTopicItemByActive = () => {
-      const targetTopics = topics.value.find(v => v.id === activeTopic.value?.id)
-      if(targetTopics && activeTopic.value){
-        targetTopics.check = activeTopic.value.check
-        targetTopics.placeholder = activeTopic.value.placeholder
-        targetTopics.isOptionRandom = activeTopic.value.isOptionRandom
-      }
     }
     const cancelLogic = () => {
       showLogicModal.value = false
-      activeTopic.value!.logic = {
-        conditions: []
-      }
+      // activeTopic.value!.logic = {
+      //   conditions: []
+      // }
       const topic = topics.value.find(item => item.id === activeTopic.value?.id)
       setActive(topic!)
     }
@@ -359,25 +352,25 @@ export default defineComponent({
       return condition
     }
     const addLogic = (item:ItemQuestionLogic, index:number) => {
-      showLogicModal.value = true
       logicTopics.value = topics.value.slice(0, index)
       item.logic = item.logic || {
-        conditions: [{
-          type: '',
-          targetId: '',
-          answerId: '', // 针对选项的条件
-        }],
+        conditions: [addEmptyCondition()],
         logicOperator: 'AND',
       }
       setActive(item)
-      // console.log(item, index);
+      showLogicModal.value = true
     }
     const setActive = (item:ItemQuestionLogic) => {
-      if (activeTopic.value?.id === item.id) {
-        return
-      }
       clearActive()
-      Promise.resolve().then(()=> activeTopic.value = JSON.parse(JSON.stringify(item)))
+      activeTopic.value = JSON.parse(JSON.stringify(item))
+    }
+    const updateTopicItemByActive = () => {
+      const targetTopics = topics.value.find(v => v.id === activeTopic.value?.id)
+      if(targetTopics && activeTopic.value){
+        targetTopics.check = activeTopic.value.check
+        targetTopics.placeholder = activeTopic.value.placeholder
+        targetTopics.isOptionRandom = activeTopic.value.isOptionRandom
+      }
     }
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement

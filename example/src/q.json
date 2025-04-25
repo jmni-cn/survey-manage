@@ -1,11 +1,12 @@
 [
   {
-    "id": "m99bpsa7fa8u0hov",
+    "id": "m9wd7qamibv17veb",
     "type": "radio",
     "typeDesc": "单选",
-    "title": "你好吗",
-    "desc": "你过得号码",
+    "title": "今天天气好吗",
+    "desc": "请说明天气",
     "placeholder": "",
+    "isOptionRandom": false,
     "check": {
       "required": true,
       "message": "此题为必答"
@@ -16,119 +17,36 @@
     },
     "options": [
       {
-        "optionId": "m99bpsa71sjdwhcq",
-        "label": "我很好",
+        "optionId": "m9wd7qam74joz7jt",
+        "label": "好",
         "index": "01"
       },
       {
-        "optionId": "m99bqf572j0d5n4c",
-        "label": "一般般",
+        "optionId": "m9wd8m7cj2nxtdfg",
+        "label": "一般",
         "index": "02"
       },
       {
-        "optionId": "m99bqisnfqaralzq",
-        "label": "不太好",
+        "optionId": "m9wd8mqydi3qxwgp",
+        "label": "不好",
         "index": "03"
       },
       {
-        "optionId": "m99bqntyak8rgclo",
-        "label": "我不好",
+        "optionId": "m9wd8n5x5155c2lf",
+        "label": "很差",
         "index": "04"
       }
     ],
     "index": "01"
   },
   {
-    "id": "m99bquxr02w2njrn",
-    "type": "radio",
-    "typeDesc": "单选",
-    "title": "你为什么好",
-    "desc": "",
-    "placeholder": "",
-    "check": {
-      "required": true,
-      "message": "此题为必答"
-    },
-    "answer": {
-      "label": "",
-      "value": ""
-    },
-    "options": [
-      {
-        "optionId": "m99bquxr0td36ks3",
-        "label": "我有很多钱",
-        "index": "01"
-      },
-      {
-        "optionId": "m99brf9ouhea2hep",
-        "label": "我有很多自己的空余时间",
-        "index": "02"
-      },
-      {
-        "optionId": "m99brk2ucwe34agb",
-        "label": "我热爱生活",
-        "index": "03"
-      }
-    ],
-    "index": "02",
-    "logic": {
-      "conditions": [
-        {
-          "type": "checked",
-          "targetId": "m99bpsa7fa8u0hov",
-          "answerId": "m99bpsa71sjdwhcq",
-          "target": {
-            "id": "m99bpsa7fa8u0hov",
-            "type": "radio",
-            "typeDesc": "单选",
-            "title": "你好吗",
-            "desc": "你过得号码",
-            "placeholder": "",
-            "check": {
-              "required": true,
-              "message": "此题为必答"
-            },
-            "answer": {
-              "label": "",
-              "value": ""
-            },
-            "options": [
-              {
-                "optionId": "m99bpsa71sjdwhcq",
-                "label": "我很好",
-                "index": "01"
-              },
-              {
-                "optionId": "m99bqf572j0d5n4c",
-                "label": "一般般",
-                "index": "02"
-              },
-              {
-                "optionId": "m99bqisnfqaralzq",
-                "label": "不太好",
-                "index": "03"
-              },
-              {
-                "optionId": "m99bqntyak8rgclo",
-                "label": "我不好",
-                "index": "04"
-              }
-            ],
-            "index": "01",
-            "logic": null
-          }
-        }
-      ],
-      "logicOperator": "AND"
-    }
-  },
-  {
-    "id": "m99bro2awjl5f5ii",
+    "id": "m9wd8ygbhflwu56f",
     "type": "checkbox",
     "typeDesc": "多选",
-    "title": "你为什么不好",
+    "title": "是那些因素导致的？",
     "desc": "",
     "placeholder": "",
+    "isOptionRandom": false,
     "check": {
       "required": true,
       "message": "此题为必答"
@@ -139,135 +57,41 @@
     },
     "options": [
       {
-        "optionId": "m99bro2apj3bo576",
-        "label": "没有自由的生活",
+        "optionId": "m9wd8ygbkelrqzpp",
+        "label": "因素1",
         "index": "01"
       },
       {
-        "optionId": "m99brwudogerksyx",
-        "label": "每天上班",
+        "optionId": "m9wd965lnzwzyr82",
+        "label": "因素2",
         "index": "02"
       },
       {
-        "optionId": "m99brwohysov7zk3",
-        "label": "每天加班",
+        "optionId": "m9wd96t80l4tmbj0",
+        "label": "因素3",
         "index": "03"
-      },
-      {
-        "optionId": "m99bs8xcuijujfk1",
-        "label": "工资很低",
-        "index": "04"
-      },
-      {
-        "optionId": "m99bseggzky8rnv3",
-        "label": "攒不住钱",
-        "index": "05"
       }
     ],
-    "index": "03",
+    "index": "02",
     "logic": {
       "conditions": [
         {
-          "type": "checked",
-          "targetId": "m99bpsa7fa8u0hov",
-          "answerId": "m99bqisnfqaralzq",
-          "target": {
-            "id": "m99bpsa7fa8u0hov",
-            "type": "radio",
-            "typeDesc": "单选",
-            "title": "你好吗",
-            "desc": "你过得号码",
-            "placeholder": "",
-            "check": {
-              "required": true,
-              "message": "此题为必答"
-            },
-            "answer": {
-              "label": "",
-              "value": ""
-            },
-            "options": [
-              {
-                "optionId": "m99bpsa71sjdwhcq",
-                "label": "我很好",
-                "index": "01"
-              },
-              {
-                "optionId": "m99bqf572j0d5n4c",
-                "label": "一般般",
-                "index": "02"
-              },
-              {
-                "optionId": "m99bqisnfqaralzq",
-                "label": "不太好",
-                "index": "03"
-              },
-              {
-                "optionId": "m99bqntyak8rgclo",
-                "label": "我不好",
-                "index": "04"
-              }
-            ],
-            "index": "01",
-            "logic": null
-          }
-        },
-        {
-          "type": "checked",
-          "targetId": "m99bpsa7fa8u0hov",
-          "answerId": "m99bqntyak8rgclo",
-          "target": {
-            "id": "m99bpsa7fa8u0hov",
-            "type": "radio",
-            "typeDesc": "单选",
-            "title": "你好吗",
-            "desc": "你过得号码",
-            "placeholder": "",
-            "check": {
-              "required": true,
-              "message": "此题为必答"
-            },
-            "answer": {
-              "label": "",
-              "value": ""
-            },
-            "options": [
-              {
-                "optionId": "m99bpsa71sjdwhcq",
-                "label": "我很好",
-                "index": "01"
-              },
-              {
-                "optionId": "m99bqf572j0d5n4c",
-                "label": "一般般",
-                "index": "02"
-              },
-              {
-                "optionId": "m99bqisnfqaralzq",
-                "label": "不太好",
-                "index": "03"
-              },
-              {
-                "optionId": "m99bqntyak8rgclo",
-                "label": "我不好",
-                "index": "04"
-              }
-            ],
-            "index": "01",
-            "logic": null
-          }
+          "type": "",
+          "targetId": "",
+          "answerId": ""
         }
       ],
-      "logicOperator": "OR"
+      "logicOperator": "AND"
     }
   },
   {
-    "id": "m99buju4d76m1usx",
+    "id": "m9wd9f0zt6p8zh7o",
     "type": "radio",
     "typeDesc": "单选",
-    "title": "如果可以你会选择什么样的人生",
-    "desc": "",
+    "title": "今天温度舒适吗？",
+    "desc": "今天温度",
     "placeholder": "",
+    "isOptionRandom": false,
     "check": {
       "required": true,
       "message": "此题为必答"
@@ -278,48 +102,71 @@
     },
     "options": [
       {
-        "optionId": "m99buju469o2unij",
-        "label": "富二代",
+        "optionId": "m9wd9f0zvfisaw8g",
+        "label": "很舒适",
         "index": "01"
       },
       {
-        "optionId": "m99bv1ahp2eqmobw",
-        "label": "官二代",
+        "optionId": "m9wd9ser9gtdbkl7",
+        "label": "舒适",
         "index": "02"
       },
       {
-        "optionId": "m99bv4qnvu11han8",
-        "label": "勇敢",
+        "optionId": "m9wd9s8r5micuwc1",
+        "label": "不舒适",
         "index": "03"
       },
       {
-        "optionId": "m99bvikjney7r9ev",
-        "label": "智慧",
+        "optionId": "m9wda4zaqp6ijww1",
+        "label": "很不舒适",
         "index": "04"
-      },
-      {
-        "optionId": "m99bvsq3e7uotdc6",
-        "label": "科学家",
-        "index": "05"
       }
     ],
-    "index": "04"
+    "index": "03"
   },
   {
-    "id": "m99bugh4m7f65e1l",
-    "type": "multipleText",
-    "typeDesc": "多行文本",
-    "title": "请说说你对人生的看法",
+    "id": "m9wdaaujj60mwsxm",
+    "type": "checkbox",
+    "typeDesc": "多选",
+    "title": "温度多少",
     "desc": "",
     "placeholder": "",
+    "isOptionRandom": false,
     "check": {
       "required": true,
       "message": "此题为必答"
     },
     "answer": {
       "label": "",
-      "value": ""
+      "value": []
     },
-    "index": "05"
+    "options": [
+      {
+        "optionId": "m9wdaaujhmczipyr",
+        "label": "0-10度",
+        "index": "01"
+      },
+      {
+        "optionId": "m9wdapfcyx6jvfa0",
+        "label": "10-15度",
+        "index": "02"
+      },
+      {
+        "optionId": "m9wdazb18kr7ik1f",
+        "label": "15-20度",
+        "index": "03"
+      },
+      {
+        "optionId": "m9wdb3h7q7etobt7",
+        "label": "20-25度",
+        "index": "04"
+      },
+      {
+        "optionId": "m9wdb7piume40zbx",
+        "label": "25-30度",
+        "index": "05"
+      }
+    ],
+    "index": "04"
   }
 ]

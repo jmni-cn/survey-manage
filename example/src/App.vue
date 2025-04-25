@@ -56,6 +56,7 @@ export default defineComponent({
       desc: "为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！",
     };
     const topics = json;
+    // const topics = [];
 
     const previewValue = ref();
 
@@ -72,7 +73,7 @@ export default defineComponent({
       console.log("test", params);
 
       
-      // console.log(JSON.stringify(value, null, 2));
+      console.log(JSON.stringify(params.topics, null, 2));
     };
     return {
       surveyConfig,
