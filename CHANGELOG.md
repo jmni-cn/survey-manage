@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/jmni-cn/survey-manage/compare/v1.3.2...v1.3.3) (2025-04-25)
+
+
+### Bug Fixes
+
+* add parseAnswers ([420df53](https://github.com/jmni-cn/survey-manage/commit/420df53d851b17d18da1069916d918077d157470))
+
 ## [1.3.2](https://github.com/jmni-cn/survey-manage/compare/v1.3.1...v1.3.2) (2025-04-25)
 
 
