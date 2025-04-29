@@ -37,7 +37,18 @@ app.component('JmniSurveyPreview', JmniSurveyPreview);
 ```
 ```xtml
 <template>
-  <JmniSurveyEdit v-model:value="value" @save="save" @preview="preview"/>
+  <JmniSurveyEdit
+    :title="surveyValue.title"
+    :desc="surveyValue.desc"
+    :topics="surveyValue.topics"
+    :login_required="surveyValue.login_required"
+    :show_question_index="surveyValue.show_question_index"
+    :answer_limit_date="surveyValue.answer_limit_date"
+    :datetimerange="surveyValue.datetimerange"
+    :theme_color="surveyValue.theme_color"
+    @save="save"
+    @preview="preview"
+  />
   <n-modal
     v-model:show="showPreview"
     style="width: 780px;"
@@ -47,7 +58,16 @@ app.component('JmniSurveyPreview', JmniSurveyPreview);
     :closable="false"
     :maskClosable="false"
   >
-    <JmniSurveyPreview :topics="previewValue.topics" :survey="previewValue.surveyConfig"/>
+    <JmniSurveyPreview
+      :title="previewValue.title"
+      :desc="previewValue.desc"
+      :topics="previewValue.topics"
+      :show_question_index="!!previewValue.show_question_index"
+      :theme_color="previewValue.theme_color"
+      :answer_limit_date="!!previewValue.answer_limit_date"
+      :datetimerange="previewValue.datetimerange"
+      :submitLoading="submitLoading"
+    />
   </n-modal>
 ```
 
