@@ -398,17 +398,11 @@ export default defineComponent({
         placeholder: '',
         isOptionRandom: false,
         check: { "required": true, "message": "此题为必答" },
-        answer: {
-          label: '',
-          value: ''
-        }
+        answer: ''
       }
       if(type === 'checkbox'){
         unit.options = [{optionId: generateUID(), label:'选项1', index: '01'},]
-        unit.answer = {
-          label: '',
-          value: []
-        }
+        unit.answer = []
       }
       if(type === 'radio'){
         unit.options = [{optionId: generateUID(), label:'选项1', index: '01'},]

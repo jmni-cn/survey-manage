@@ -1,0 +1,441 @@
+[
+    {
+        "id": "ma693aw3ft13ybpv",
+        "type": "radio",
+        "typeDesc": "单选",
+        "title": "今天是几号",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "options": [
+            {
+                "optionId": "ma693aw305my76cm",
+                "label": "5.1",
+                "index": "01"
+            },
+            {
+                "optionId": "ma693tfiqqiwd8ye",
+                "label": "5.2",
+                "index": "02"
+            },
+            {
+                "optionId": "ma693xlg18ht3zl1",
+                "label": "4.30",
+                "index": "03"
+            }
+        ],
+        "index": "01"
+    },
+    {
+        "id": "ma6943u6zfymkgct",
+        "type": "checkbox",
+        "typeDesc": "多选",
+        "title": "今天是五一长假",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": [],
+        "options": [
+            {
+                "optionId": "ma6943u6xqxfpthg",
+                "label": "对",
+                "index": "01"
+            },
+            {
+                "optionId": "ma694gvv1rxgkkri",
+                "label": "是的",
+                "index": "02"
+            },
+            {
+                "optionId": "ma694jhytqichr1a",
+                "label": "yes",
+                "index": "03"
+            }
+        ],
+        "index": "02"
+    },
+    {
+        "id": "ma694q34tegtl9zn",
+        "type": "radio",
+        "typeDesc": "单选",
+        "title": "你出去玩了吗？",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "options": [
+            {
+                "optionId": "ma694q342wu6v0h0",
+                "label": "是的",
+                "index": "01"
+            },
+            {
+                "optionId": "ma69510e6xypkjy4",
+                "label": "没有",
+                "index": "02"
+            }
+        ],
+        "index": "03"
+    },
+    {
+        "id": "ma695a7uksnbv1qg",
+        "type": "radio",
+        "typeDesc": "单选",
+        "title": "你去哪里玩了",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "options": [
+            {
+                "optionId": "ma695a7usa08qei3",
+                "label": "西安",
+                "index": "01"
+            },
+            {
+                "optionId": "ma695i83odu5ycfm",
+                "label": "港澳",
+                "index": "02"
+            },
+            {
+                "optionId": "ma695uh9x3elsbjj",
+                "label": "长沙",
+                "index": "03"
+            }
+        ],
+        "index": "04",
+        "logic": {
+            "conditions": [
+                {
+                    "type": "checked",
+                    "targetId": "ma694q34tegtl9zn",
+                    "answerId": "ma694q342wu6v0h0",
+                    "target": {
+                        "id": "ma694q34tegtl9zn",
+                        "type": "radio",
+                        "typeDesc": "单选",
+                        "title": "你出去玩了吗？",
+                        "desc": "",
+                        "placeholder": "",
+                        "isOptionRandom": false,
+                        "check": {
+                            "required": true,
+                            "message": "此题为必答"
+                        },
+                        "answer": "",
+                        "options": [
+                            {
+                                "optionId": "ma694q342wu6v0h0",
+                                "label": "是的",
+                                "index": "01"
+                            },
+                            {
+                                "optionId": "ma69510e6xypkjy4",
+                                "label": "没有",
+                                "index": "02"
+                            }
+                        ],
+                        "index": "03",
+                        "logic": null
+                    }
+                }
+            ],
+            "logicOperator": "AND"
+        }
+    },
+    {
+        "id": "ma6966oiqytj89s8",
+        "type": "checkbox",
+        "typeDesc": "多选",
+        "title": "你为什么没有出去玩",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": [],
+        "options": [
+            {
+                "optionId": "ma6966oiqqfzy0uv",
+                "label": "我喜欢躺在家里休息",
+                "index": "01"
+            },
+            {
+                "optionId": "ma696pdn5hd36xel",
+                "label": "我要加班",
+                "index": "02"
+            }
+        ],
+        "index": "05",
+        "logic": {
+            "conditions": [
+                {
+                    "type": "checked",
+                    "targetId": "ma694q34tegtl9zn",
+                    "answerId": "ma69510e6xypkjy4",
+                    "target": {
+                        "id": "ma694q34tegtl9zn",
+                        "type": "radio",
+                        "typeDesc": "单选",
+                        "title": "你出去玩了吗？",
+                        "desc": "",
+                        "placeholder": "",
+                        "isOptionRandom": false,
+                        "check": {
+                            "required": true,
+                            "message": "此题为必答"
+                        },
+                        "answer": "",
+                        "options": [
+                            {
+                                "optionId": "ma694q342wu6v0h0",
+                                "label": "是的",
+                                "index": "01"
+                            },
+                            {
+                                "optionId": "ma69510e6xypkjy4",
+                                "label": "没有",
+                                "index": "02"
+                            }
+                        ],
+                        "index": "03",
+                        "logic": null
+                    }
+                }
+            ],
+            "logicOperator": "AND"
+        }
+    },
+    {
+        "id": "ma697kv2937klxnb",
+        "type": "radio",
+        "typeDesc": "单选",
+        "title": "好玩吗",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "options": [
+            {
+                "optionId": "ma697kv2floqe8vj",
+                "label": "好玩",
+                "index": "01"
+            },
+            {
+                "optionId": "ma697u0petqfmor3",
+                "label": "人太多，不好玩",
+                "index": "02"
+            }
+        ],
+        "index": "06",
+        "logic": {
+            "conditions": [
+                {
+                    "type": "answered",
+                    "targetId": "ma695a7uksnbv1qg",
+                    "answerId": "",
+                    "target": {
+                        "id": "ma695a7uksnbv1qg",
+                        "type": "radio",
+                        "typeDesc": "单选",
+                        "title": "你去哪里玩了",
+                        "desc": "",
+                        "placeholder": "",
+                        "isOptionRandom": false,
+                        "check": {
+                            "required": true,
+                            "message": "此题为必答"
+                        },
+                        "answer": "",
+                        "options": [
+                            {
+                                "optionId": "ma695a7usa08qei3",
+                                "label": "西安",
+                                "index": "01"
+                            },
+                            {
+                                "optionId": "ma695i83odu5ycfm",
+                                "label": "港澳",
+                                "index": "02"
+                            },
+                            {
+                                "optionId": "ma695uh9x3elsbjj",
+                                "label": "长沙",
+                                "index": "03"
+                            }
+                        ],
+                        "index": "04",
+                        "logic": null
+                    }
+                }
+            ],
+            "logicOperator": "AND"
+        }
+    },
+    {
+        "id": "ma698e852bm3f6ez",
+        "type": "checkbox",
+        "typeDesc": "多选",
+        "title": "你在家里做什么",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": [],
+        "options": [
+            {
+                "optionId": "ma698e85pmdxupm8",
+                "label": "打游戏",
+                "index": "01"
+            },
+            {
+                "optionId": "ma698njvizy6wbyv",
+                "label": "睡觉",
+                "index": "02"
+            },
+            {
+                "optionId": "ma698rwgbk39w8y8",
+                "label": "看电影",
+                "index": "03"
+            },
+            {
+                "optionId": "ma698ujrljpocpax",
+                "label": "看动漫",
+                "index": "04"
+            }
+        ],
+        "index": "07",
+        "logic": {
+            "conditions": [
+                {
+                    "type": "checked",
+                    "targetId": "ma6966oiqytj89s8",
+                    "answerId": "ma6966oiqqfzy0uv",
+                    "target": {
+                        "id": "ma6966oiqytj89s8",
+                        "type": "checkbox",
+                        "typeDesc": "多选",
+                        "title": "你为什么没有出去玩",
+                        "desc": "",
+                        "placeholder": "",
+                        "isOptionRandom": false,
+                        "check": {
+                            "required": true,
+                            "message": "此题为必答"
+                        },
+                        "answer": [],
+                        "options": [
+                            {
+                                "optionId": "ma6966oiqqfzy0uv",
+                                "label": "我喜欢躺在家里休息",
+                                "index": "01"
+                            },
+                            {
+                                "optionId": "ma696pdn5hd36xel",
+                                "label": "我要加班",
+                                "index": "02"
+                            }
+                        ],
+                        "index": "05",
+                        "logic": null
+                    }
+                }
+            ],
+            "logicOperator": "AND"
+        }
+    },
+    {
+        "id": "ma699j3mpja59fgg",
+        "type": "multipleText",
+        "typeDesc": "多行文本",
+        "title": "不好意思，牛马",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "index": "08",
+        "logic": {
+            "conditions": [
+                {
+                    "type": "checked",
+                    "targetId": "ma6966oiqytj89s8",
+                    "answerId": "ma696pdn5hd36xel",
+                    "target": {
+                        "id": "ma6966oiqytj89s8",
+                        "type": "checkbox",
+                        "typeDesc": "多选",
+                        "title": "你为什么没有出去玩",
+                        "desc": "",
+                        "placeholder": "",
+                        "isOptionRandom": false,
+                        "check": {
+                            "required": true,
+                            "message": "此题为必答"
+                        },
+                        "answer": [],
+                        "options": [
+                            {
+                                "optionId": "ma6966oiqqfzy0uv",
+                                "label": "我喜欢躺在家里休息",
+                                "index": "01"
+                            },
+                            {
+                                "optionId": "ma696pdn5hd36xel",
+                                "label": "我要加班",
+                                "index": "02"
+                            }
+                        ],
+                        "index": "05",
+                        "logic": null
+                    }
+                }
+            ],
+            "logicOperator": "AND"
+        }
+    },
+    {
+        "id": "ma69a9almv8uyodk",
+        "type": "multipleText",
+        "typeDesc": "多行文本",
+        "title": "有什么想说的的吗",
+        "desc": "",
+        "placeholder": "",
+        "isOptionRandom": false,
+        "check": {
+            "required": true,
+            "message": "此题为必答"
+        },
+        "answer": "",
+        "index": "09"
+    }
+]

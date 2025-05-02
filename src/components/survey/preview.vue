@@ -24,24 +24,24 @@
 
 
         <template v-if="item.type === 'radio'">
-          <n-radio-group v-model:value="item.answer.value">
+          <n-radio-group v-model:value="item.answer">
             <n-space vertical>
               <n-radio v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-radio>
             </n-space>
           </n-radio-group>
         </template>
         <template v-if="item.type === 'checkbox'">
-          <n-checkbox-group v-model:value="item.answer.value">
+          <n-checkbox-group v-model:value="item.answer">
             <n-space vertical>
               <n-checkbox v-for="option in item.options" :value="option.optionId">{{ option.label }}</n-checkbox>
             </n-space>
           </n-checkbox-group>
         </template>
         <template v-if="item.type === 'singleText'">
-          <n-input v-model:value="item.answer.value" type="text" :placeholder="item.placeholder" />
+          <n-input v-model:value="item.answer" type="text" :placeholder="item.placeholder" />
         </template>
         <template v-if="item.type === 'multipleText'">
-          <n-input v-model:value="item.answer.value" type="textarea" :placeholder="item.placeholder" />
+          <n-input v-model:value="item.answer" type="textarea" :placeholder="item.placeholder" />
         </template>
       </n-form-item>
 
@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, PropType, ref } from 'vue'
+import { computed, PropType, ref, watchEffect } from 'vue'
 import { defineComponent } from 'vue'
 import { zhCN, dateZhCN, type ScrollbarInst, type FormInst } from 'naive-ui'
 import type { AnswerValue, Condition, ItemOption, ItemQuestionLogic } from './type'
@@ -152,7 +152,22 @@ export default defineComponent({
 
     const getVisibleIndex = (id: string) => visibleIndexMap.value.get(id)
 
-    const isVisible = (item: ItemQuestionLogic) => {
+    const clearAnswer = (item: ItemQuestionLogic) => {
+      switch (item.type) {
+        case 'radio':
+        case 'singleText':
+        case 'multipleText':
+          item.answer = ''
+          break
+        case 'checkbox':
+          item.answer= []
+          break
+        default:
+          item.answer = ''
+      }
+    }
+
+    const isVisible = (item: ItemQuestionLogic, _dependencies?: any[]) => {
       if (!item.logic) return true
 
       const { conditions, logicOperator = 'AND' } = item.logic
@@ -164,7 +179,7 @@ export default defineComponent({
 
           if (!target || !type) return null
 
-          const targetValue = target.answer.value
+          const targetValue = target.answer
 
           switch (type) {
               case 'checked':
@@ -197,11 +212,20 @@ export default defineComponent({
         : results.some(Boolean)
     }
 
+    watchEffect(() => {
+      for (const item of props.topics) {
+        const visible = isVisible(item) // 只判断，不做数据修改
+        if (!visible) {
+          clearAnswer(item) // 统一做副作用操作
+        }
+      }
+    })
+
     // 生成表单模型
     const formModel = computed(() =>
-    props.topics.reduce(
+      props.topics.reduce(
         (model, topic) => {
-          model[topic.id] = topic.answer.value
+          model[topic.id] = topic.answer
           return model
         },
         {} as Record<string, any>
@@ -210,7 +234,7 @@ export default defineComponent({
 
     // 动态生成校验规则
     const validationRules = computed(() =>
-    props.topics.reduce(
+      props.topics.reduce(
         (rules, topic) => {
           if (topic.check?.required) {
             rules[topic.id] = {
@@ -229,7 +253,22 @@ export default defineComponent({
       data.forEach((question) => {
         const { id, type, options = [] } = question;
         const answer = userAnswersData[id];
+        if (answer === undefined || answer === null || answer === '') {
+          return; // 如果没有答案，跳过
+        }
+        if (type === 'radio' && !answer) {
+          return; // 如果是单选题且没有答案，跳过
+        }
+        if (type === 'checkbox' && (!Array.isArray(answer) || !answer.length) ) {
+          return; // 如果是多选题且答案不是数组，跳过
+        }
+        if (type === 'singleText' && typeof answer !== 'string') {
+          return; // 如果是单行文本题且答案不是字符串，跳过
+        }
         const getOptionLabel = (optionId: string): ItemOption => {
+          if (!optionId) {
+            throw new Error(`Option ID is empty`);
+          }          
           const option = options.find((opt) => opt.optionId === optionId);
           if (!option) {
             throw new Error(`Option with ID ${optionId} not found`);

@@ -3,7 +3,7 @@
 export interface SurveyValue {
     surveyConfig: SurveyConfig
     topics: ItemQuestionLogic[]
-  }
+}
 
 export interface SurveyConfig {
     title: string
@@ -44,7 +44,7 @@ export interface Logic {
     logicOperator?: 'AND' | 'OR' // 条件逻辑关系，默认是 AND
 }
 
-export interface ItemQuestion extends QuestionConfig{
+export interface ItemQuestion extends QuestionConfig {
     id: string
     index?: string
     type: string
@@ -52,13 +52,10 @@ export interface ItemQuestion extends QuestionConfig{
     title: string
     desc: string
     options?: ItemOption[]
-    answer:{
-        label: string
-        value: string|string[]
-    }
+    answer: string | string[]
 }
 export interface ItemQuestionLogic extends ItemQuestion {
-    logic?: Logic|null // 仅绑定到需要逻辑控制的目标题目
+    logic?: Logic // 仅绑定到需要逻辑控制的目标题目
 }
 
 
@@ -70,10 +67,10 @@ export type CheckboxAnswer = ItemOption[];
 export type TextAnswer = string;
 
 export type AnswerTypeMap = {
-  radio: RadioAnswer;
-  checkbox: CheckboxAnswer;
-  singleText: TextAnswer;
-  multipleText: TextAnswer;
+    radio: RadioAnswer;
+    checkbox: CheckboxAnswer;
+    singleText: TextAnswer;
+    multipleText: TextAnswer;
 };
 
 export type AnswerValue = RadioAnswer | CheckboxAnswer | TextAnswer;
@@ -83,7 +80,7 @@ export type AnswersData = Record<string, AnswerValue>;
 
 // 未来可以支持泛型推导每个 id 的答案类型（如需）
 export type TypedAnswersData<T extends ItemQuestionLogic[]> = {
-  [K in T[number] as K['id']]: K['type'] extends keyof AnswerTypeMap
+    [K in T[number]as K['id']]: K['type'] extends keyof AnswerTypeMap
     ? AnswerTypeMap[K['type']]
     : never;
 };

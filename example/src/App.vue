@@ -40,11 +40,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import json from "./q.json";
+import json from "./2.json";
 import { storeToRefs } from "pinia";
 import { zhCN, dateZhCN } from "naive-ui";
 import { useThemeStore } from "./store/useThemeStore";
-import { title } from "process";
 
 export default defineComponent({
   name: "App",
